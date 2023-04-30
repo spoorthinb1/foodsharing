@@ -1,25 +1,24 @@
 package com.napier.foodsharing.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
-
 /**
  * The persistent class for the order_details database table.
  * 
  */
 @Entity
-@Table(name="order_details")
-@NamedQuery(name="OrderDetail.findAll", query="SELECT o FROM OrderDetail o")
+@Table(name = "order_details")
+@NamedQuery(name = "OrderDetail.findAll", query = "SELECT o FROM OrderDetail o")
 public class OrderDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,14 +27,14 @@ public class OrderDetail implements Serializable {
 
 	private int quantity;
 
-	@Column(name="sub_total")
-	private Timestamp subTotal;
+	@Column(name = "sub_total")
+	private double subTotal;
 
 	@MapsId("orderId")
-	//bi-directional many-to-one association to Order
-	@ManyToOne
-	@JoinColumn(name="order_id")
-	private Order order;
+	// bi-directional many-to-one association to Order
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "order_id")
+	private OrderItem order;
 
 	public OrderDetail() {
 	}
@@ -56,19 +55,19 @@ public class OrderDetail implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public Timestamp getSubTotal() {
+	public double getSubTotal() {
 		return this.subTotal;
 	}
 
-	public void setSubTotal(Timestamp subTotal) {
+	public void setSubTotal(double subTotal) {
 		this.subTotal = subTotal;
 	}
 
-	public Order getOrder() {
+	public OrderItem getOrder() {
 		return this.order;
 	}
 
-	public void setOrder(Order order) {
+	public void setOrder(OrderItem order) {
 		this.order = order;
 	}
 

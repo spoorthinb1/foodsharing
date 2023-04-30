@@ -1,70 +1,70 @@
 package com.napier.foodsharing.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
-
 
 /**
  * The persistent class for the customer database table.
  * 
  */
 @Entity
-@NamedQuery(name="Customer.findAll", query="SELECT c FROM Customer c")
+@NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c")
 public class Customer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="user_id")
+	@Column(name = "user_id")
 	private String userId;
 
-	@Column(name="account_status")
+	@Column(name = "account_status")
 	private String accountStatus;
 
-	@Column(name="address")
+	@Column(name = "address")
 	private String address;
 
-	@Column(name="admin_user")
+	@Column(name = "admin_user")
 	private int adminUser;
 
-	@Column(name="contact_number")
+	@Column(name = "contact_number")
 	private String contactNumber;
 
-	@Column(name="email_id")
+	@Column(name = "email_id")
 	private String emailId;
 
-	@Column(name="first_name")
+	@Column(name = "first_name")
 	private String firstName;
 
-	@Column(name="last_name")
+	@Column(name = "last_name")
 	private String lastName;
 
 	@Lob
 	private String password;
 
 	@Lob
-	@Column(name="profile_picture")
+	@Column(name = "profile_picture")
 	private byte[] profilePicture = new byte[5];
 
-	//bi-directional many-to-one association to Menu
-	@OneToMany(mappedBy="customer", fetch = FetchType.LAZY)
-	private List<Menu> menus;
-
-	//bi-directional many-to-one association to Order
-	@OneToMany(mappedBy="customer", fetch = FetchType.LAZY)
-	private List<Order> orders;
-
-	//bi-directional many-to-many association to ShareGroup
-	@ManyToMany(mappedBy="customers", fetch = FetchType.LAZY)
-	private List<ShareGroup> shareGroups;
+	/*
+	 * //bi-directional many-to-one association to Menu
+	 * 
+	 * @OneToMany(mappedBy="customer", fetch = FetchType.LAZY) private List<Menu>
+	 * menus;
+	 * 
+	 * //bi-directional many-to-one association to Order
+	 * 
+	 * @OneToMany(mappedBy="customer", fetch = FetchType.LAZY) private List<Order>
+	 * orders;
+	 * 
+	 * //bi-directional many-to-many association to ShareGroup
+	 * 
+	 * @ManyToMany(mappedBy="customers", fetch = FetchType.LAZY) private
+	 * List<ShareGroup> shareGroups;
+	 */
 
 	public Customer() {
 	}
@@ -148,10 +148,5 @@ public class Customer implements Serializable {
 	public void setProfilePicture(byte[] profilePicture) {
 		this.profilePicture = profilePicture;
 	}
-
-
-	
-
-
 
 }

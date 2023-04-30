@@ -6,4 +6,6 @@ import com.napier.foodsharing.entity.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, String> {
 
+	Customer findByUserIdAndPassword(String userId, String password);
+
 }

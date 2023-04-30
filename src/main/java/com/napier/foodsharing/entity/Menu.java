@@ -5,59 +5,61 @@ import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQuery;
+import lombok.Builder;
 
 /**
  * The persistent class for the menu database table.
  * 
  */
 @Entity
-@NamedQuery(name="Menu.findAll", query="SELECT m FROM Menu m")
+@Builder
 public class Menu implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="menu_id")
+	@GeneratedValue(strategy = GenerationType.UUID)
+	@Column(name = "menu_id")
 	private String menuId;
 
-	@Column(name="availability_time")
+	@Column(name = "availability_time")
 	private Timestamp availabilityTime;
 
 	private String ingredients;
 
 	@Lob
-	@Column(name="menu_image")
+	@Column(name = "menu_image")
 	private byte[] menuImage;
 
-	@Lob
-	private byte[] price;
+	private double price;
 
 	private int quantity;
 
 	private String recipe;
 
-	@Column(name="selling_type")
+	@Column(name = "selling_type")
 	private String sellingType;
 
 	private String status;
 
-	//bi-directional many-to-one association to Category
+	// bi-directional many-to-one association to Category
 	@ManyToOne
-	@JoinColumn(name="category_id")
+	@JoinColumn(name = "category_id")
 	private Category category;
 
-	//bi-directional many-to-one association to Customer
+	// bi-directional many-to-one association to Customer
 	@ManyToOne
-	@JoinColumn(name="user_id")
-	private Customer customer;
+	@JoinColumn(name = "user_id")
+	private SellerProfile sellerProfile;
 
-	//bi-directional many-to-one association to Item
+	// bi-directional many-to-one association to Item
 	@ManyToOne
-	@JoinColumn(name="item_id")
+	@JoinColumn(name = "item_id")
 	private Item item;
 
 	public Menu() {
@@ -95,11 +97,11 @@ public class Menu implements Serializable {
 		this.menuImage = menuImage;
 	}
 
-	public byte[] getPrice() {
+	public double getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(byte[] price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
@@ -143,19 +145,37 @@ public class Menu implements Serializable {
 		this.category = category;
 	}
 
-	public Customer getCustomer() {
-		return this.customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
 	public Item getItem() {
 		return this.item;
 	}
 
 	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public SellerProfile getSellerProfile() {
+		return sellerProfile;
+	}
+
+	public void setSellerProfile(SellerProfile sellerProfile) {
+		this.sellerProfile = sellerProfile;
+	}
+
+	public Menu(String menuId, Timestamp availabilityTime, String ingredients, byte[] menuImage, double price,
+			int quantity, String recipe, String sellingType, String status, Category category,
+			SellerProfile sellerProfile, Item item) {
+		super();
+		this.menuId = menuId;
+		this.availabilityTime = availabilityTime;
+		this.ingredients = ingredients;
+		this.menuImage = menuImage;
+		this.price = price;
+		this.quantity = quantity;
+		this.recipe = recipe;
+		this.sellingType = sellingType;
+		this.status = status;
+		this.category = category;
+		this.sellerProfile = sellerProfile;
 		this.item = item;
 	}
 

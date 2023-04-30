@@ -11,19 +11,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.napier.foodsharing.controller.model.LoginUser;
 import com.napier.foodsharing.controller.model.UpdatePasswordDto;
 import com.napier.foodsharing.entity.Customer;
 import com.napier.foodsharing.service.CustomerService;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("api/user")
 public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
 	
 	
-	@PostMapping()
+	@PostMapping("/register")
 	public Customer register(@RequestBody Customer customer) {
 		return customerService.registerUser(customer);
 	}
@@ -47,5 +48,11 @@ public class CustomerController {
 	public List<Customer> getAllUsers() {
 		return customerService.getAllUser();
 	}
+	
+	@PostMapping("/login")
+	public Customer login(@RequestBody LoginUser login ) {
+		return customerService.login(login.getUserId(), login.getPassword());
+	}
+	
 	
 }

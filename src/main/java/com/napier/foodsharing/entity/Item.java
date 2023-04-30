@@ -1,37 +1,38 @@
 package com.napier.foodsharing.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
 
 /**
  * The persistent class for the item database table.
  * 
  */
 @Entity
-@NamedQuery(name="Item.findAll", query="SELECT i FROM Item i")
+@NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i")
 public class Item implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="item_id")
+	// @GeneratedValue(strategy = GenerationType.UUID)
+	@Column(name = "item_id")
 	private String itemId;
 
-	private String item_Description;
+	@Column(name = "item_Description")
+	private String itemDescription;
 
-	@Column(name="item_name")
+	@Column(name = "item_name")
 	private String itemName;
 
-	//bi-directional many-to-one association to Menu
-	@OneToMany(mappedBy="item")
-	private List<Menu> menus;
-
 	public Item() {
+	}
+
+	public Item(String itemId) {
+		super();
+		this.itemId = itemId;
 	}
 
 	public String getItemId() {
@@ -42,12 +43,12 @@ public class Item implements Serializable {
 		this.itemId = itemId;
 	}
 
-	public String getItem_Description() {
-		return this.item_Description;
+	public String getItemDescription() {
+		return this.itemDescription;
 	}
 
-	public void setItem_Description(String item_Description) {
-		this.item_Description = item_Description;
+	public void setItemDescription(String itemDescription) {
+		this.itemDescription = itemDescription;
 	}
 
 	public String getItemName() {
@@ -56,28 +57,6 @@ public class Item implements Serializable {
 
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
-	}
-
-	public List<Menu> getMenus() {
-		return this.menus;
-	}
-
-	public void setMenus(List<Menu> menus) {
-		this.menus = menus;
-	}
-
-	public Menu addMenus(Menu menus) {
-		getMenus().add(menus);
-		menus.setItem(this);
-
-		return menus;
-	}
-
-	public Menu removeMenus(Menu menus) {
-		getMenus().remove(menus);
-		menus.setItem(null);
-
-		return menus;
 	}
 
 }

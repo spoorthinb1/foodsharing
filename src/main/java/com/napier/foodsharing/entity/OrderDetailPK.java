@@ -11,30 +11,41 @@ import jakarta.persistence.Embeddable;
  */
 @Embeddable
 public class OrderDetailPK implements Serializable {
-	//default serial version id, required for serializable classes.
+	// default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="order_id", insertable=false, updatable=false)
+	@Column(name = "order_id", insertable = false, updatable = false)
 	private String orderId;
 
-	@Column(name="menu_id")
+	@Column(name = "menu_id")
 	private String menuId;
 
 	public OrderDetailPK() {
 	}
+
+	public OrderDetailPK(String orderId, String menuId) {
+		super();
+		this.orderId = orderId;
+		this.menuId = menuId;
+	}
+
 	public String getOrderId() {
 		return this.orderId;
 	}
+
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
+
 	public String getMenuId() {
 		return this.menuId;
 	}
+
 	public void setMenuId(String menuId) {
 		this.menuId = menuId;
 	}
 
+	@Override
 	public boolean equals(Object other) {
 		if (this == other) {
 			return true;
@@ -42,18 +53,17 @@ public class OrderDetailPK implements Serializable {
 		if (!(other instanceof OrderDetailPK)) {
 			return false;
 		}
-		OrderDetailPK castOther = (OrderDetailPK)other;
-		return 
-			this.orderId.equals(castOther.orderId)
-			&& this.menuId.equals(castOther.menuId);
+		OrderDetailPK castOther = (OrderDetailPK) other;
+		return this.orderId.equals(castOther.orderId) && this.menuId.equals(castOther.menuId);
 	}
 
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
 		hash = hash * prime + this.orderId.hashCode();
 		hash = hash * prime + this.menuId.hashCode();
-		
+
 		return hash;
 	}
 }
