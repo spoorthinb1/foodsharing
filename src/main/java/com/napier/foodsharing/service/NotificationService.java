@@ -6,13 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.napier.foodsharing.entity.Notification;
+import com.napier.foodsharing.entity.OrderItem;
 import com.napier.foodsharing.repository.NotificationRepository;
+import com.napier.foodsharing.repository.OrderRepository;
 
 @Service
 public class NotificationService {
 
 	@Autowired
 	private NotificationRepository notificationRepository;
+
+	@Autowired
+	private OrderRepository orderRepository;
 
 	public void saveNotification(Notification notification) {
 		notificationRepository.save(notification);
@@ -24,6 +29,27 @@ public class NotificationService {
 
 	public List<Notification> getUnreadUserNotification(String userId) {
 		return notificationRepository.findByUserIdAndNotified(userId, false);
+	}
+
+	public Notification markNotifiyAsRead(String notificationId) {
+		Notification notifiy = notificationRepository.findById(notificationId).get();
+		notifiy.setNotified(true);
+		return notificationRepository.save(notifiy);
+	}
+
+	public Boolean sendNotifcations(String message, String orderId) {
+		OrderItem order = orderRepository.findById(orderId).get();
+		order.setOrderStatus("Complete");
+		orderRepository.save(order);
+		Notification notification = new Notification();
+		notification.setMessage(message);
+		notification.setLinkMessageOne(orderId);
+		notification.setLinkMessageTwo(order.getSellerId());
+		notification.setUserId(order.getCustomer().getUserId());
+		notification.setNotified(false);
+		notificationRepository.save(notification);
+		return true;
+
 	}
 
 }

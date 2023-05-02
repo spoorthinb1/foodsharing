@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.napier.foodsharing.controller.model.FeedBackSumary;
+import com.napier.foodsharing.controller.model.FeedbackDTO;
 import com.napier.foodsharing.controller.model.OrderDetailsDTO;
 import com.napier.foodsharing.controller.model.OrderSummaryDTO;
 import com.napier.foodsharing.entity.Customer;
@@ -40,6 +42,7 @@ public class OrderUsecase {
 		order.setOrderStatus(Constant.IN_PROGRESS);
 		order.setPaymentStatus(Constant.PENDING);
 		order.setOrderDateTime(Timestamp.valueOf(LocalDateTime.now()));
+		order.setSellerId(findSellerId(orderItems.get(0).getMenuId()));
 		order.setTotal(orderItems.stream().map(e -> e.getSubTotal()).reduce(0.0, (a, b) -> a + b));
 		Customer user = new Customer();
 		user.setUserId(userId);
@@ -94,5 +97,31 @@ public class OrderUsecase {
 				.orderItems(detailDto).sellerName(profile.getCustomer().getFirstName()).address(profile.getLocation())
 				.total(order.getTotal()).comment(order.getComment()).rating(order.getRating()).build();
 
+	}
+
+	public OrderItem addFeedback(String orderId, String message, String rating) {
+		OrderItem order = orderRepository.findById(orderId).get();
+		order.setComment(message);
+		order.setRating(rating);
+		return orderRepository.save(order);
+	}
+
+	public FeedBackSumary getFeedBack(String userId) {
+		long orderedCount = orderRepository.countByCustomerUserId(userId);
+		long orderRecivedCount = orderRepository.countBySellerId(userId);
+		List<OrderItem> orders = orderRepository.findBySellerId(userId);
+		List<FeedbackDTO> feedDto = orders.stream().filter(e -> e.getComment() != null).map(e -> {
+			FeedbackDTO feed = new FeedbackDTO();
+			feed.setComment(e.getComment());
+			feed.setRating(Integer.parseInt(e.getRating()));
+			feed.setUserId(e.getCustomer().getUserId());
+			feed.setUserName(e.getCustomer().getFirstName());
+			return feed;
+		}).collect(Collectors.toList());
+		FeedBackSumary feedsummary = new FeedBackSumary();
+		feedsummary.setFeedbackDTO(feedDto);
+		feedsummary.setOrderCount(orderedCount);
+		feedsummary.setOrderRecivedCount(orderRecivedCount);
+		return feedsummary;
 	}
 }

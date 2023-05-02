@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.napier.foodsharing.controller.model.FeedBackSumary;
 import com.napier.foodsharing.controller.model.OrderDetailsDTO;
 import com.napier.foodsharing.controller.model.OrderSummaryDTO;
 import com.napier.foodsharing.entity.Notification;
@@ -27,7 +28,7 @@ public class OrderService {
 		notify.setLinkMessageTwo(order.getOrderId());
 		notify.setMessage("You have recived a new order from");
 		notify.setNotified(false);
-		notify.setUserId(orderUsecase.findSellerId(orderItems.get(0).getMenuId()));
+		notify.setUserId(order.getSellerId());
 		notificationService.saveNotification(notify);
 		return order;
 	}
@@ -38,6 +39,15 @@ public class OrderService {
 
 	public OrderSummaryDTO getOrderDetails(String orderId) {
 		return orderUsecase.getOrderDetails(orderId);
+	}
+
+	public OrderItem addFeedBack(String orderId, String message, String rating) {
+		return orderUsecase.addFeedback(orderId, message, rating);
+	}
+
+	public FeedBackSumary getFeedBack(String userId) {
+
+		return orderUsecase.getFeedBack(userId);
 	}
 
 }

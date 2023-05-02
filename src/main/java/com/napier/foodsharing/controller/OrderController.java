@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.napier.foodsharing.controller.model.FeedBackSumary;
 import com.napier.foodsharing.controller.model.OrderDetailsDTO;
 import com.napier.foodsharing.controller.model.OrderSummaryDTO;
 import com.napier.foodsharing.entity.OrderItem;
@@ -35,5 +36,17 @@ public class OrderController {
 	@GetMapping("/details")
 	public OrderSummaryDTO getOrderDetails(@RequestParam("orderId") String orderId) {
 		return orderService.getOrderDetails(orderId);
+	}
+
+	@GetMapping("/feedback")
+	public OrderItem addFeedback(@RequestParam("orderId") String orderId, @RequestParam("message") String message,
+			@RequestParam("rating") String rating) {
+		return orderService.addFeedBack(orderId, message, rating);
+
+	}
+
+	@GetMapping("/feedback/summary")
+	public FeedBackSumary getFeedBack(@RequestParam("userId") String userId) {
+		return orderService.getFeedBack(userId);
 	}
 }

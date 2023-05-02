@@ -10,4 +10,10 @@ public interface OrderRepository extends JpaRepository<OrderItem, String> {
 
 	List<OrderItem> findByCustomerUserId(String userId);
 
+	long countBySellerId(String userId);
+
+	long countByCustomerUserId(String userId);
+
+	List<OrderItem> findBySellerId(String userId);
+
 }

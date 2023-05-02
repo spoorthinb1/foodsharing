@@ -37,7 +37,8 @@ public class OrderItem implements Serializable {
 
 	private double total;
 
-	private String seller_id;
+	@Column(name = "seller_id")
+	private String sellerId;
 
 	// bi-directional many-to-one association to Customer
 	@ManyToOne
@@ -91,23 +92,6 @@ public class OrderItem implements Serializable {
 		this.customer = customer;
 	}
 
-	/*
-	 * public List<OrderDetail> getOrderDetails() { return this.orderDetails; }
-	 * 
-	 * public void setOrderDetails(List<OrderDetail> orderDetails) {
-	 * this.orderDetails = orderDetails; }
-	 */
-	/*
-	 * public OrderDetail addOrderDetail(OrderDetail orderDetail) {
-	 * getOrderDetails().add(orderDetail); orderDetail.setOrder(this);
-	 * 
-	 * return orderDetail; }
-	 * 
-	 * public OrderDetail removeOrderDetail(OrderDetail orderDetail) {
-	 * getOrderDetails().remove(orderDetail); orderDetail.setOrder(null);
-	 * 
-	 * return orderDetail; }
-	 */
 	public String getOrderStatus() {
 		return orderStatus;
 	}
@@ -132,12 +116,12 @@ public class OrderItem implements Serializable {
 		this.total = total;
 	}
 
-	public String getSeller_id() {
-		return seller_id;
+	public String getSellerId() {
+		return sellerId;
 	}
 
-	public void setSeller_id(String seller_id) {
-		this.seller_id = seller_id;
+	public void setSellerId(String sellerId) {
+		this.sellerId = sellerId;
 	}
 
 }
