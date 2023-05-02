@@ -93,4 +93,8 @@ public class CustomerService {
 		return sellerProfileRepository.save(seller);
 	}
 
+	public SellerProfile getSeller(String sellerId) {
+		return sellerProfileRepository.findById(sellerId).get();
+	}
+
 }

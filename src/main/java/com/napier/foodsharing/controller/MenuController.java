@@ -34,7 +34,6 @@ public class MenuController {
 
 	@PostMapping
 	public Menu saveMenu(@RequestBody MenuDTO menu) {
-		menu.setMenuImage("image".getBytes());
 		return menuService.addMenu(menu);
 	}
 

@@ -11,7 +11,7 @@ public class MenuDTO {
 
 	private String ingredients;
 
-	private byte[] menuImage;
+	private String menuImage;
 
 	private double price;
 

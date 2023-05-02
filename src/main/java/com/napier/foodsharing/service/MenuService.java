@@ -31,7 +31,6 @@ public class MenuService {
 	}
 
 	public Item addItem(Item item) {
-		item.setItemId("123");
 		return itemRepository.save(item);
 	}
 

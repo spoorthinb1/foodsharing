@@ -9,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import lombok.Builder;
 
@@ -32,9 +31,8 @@ public class Menu implements Serializable {
 
 	private String ingredients;
 
-	@Lob
 	@Column(name = "menu_image")
-	private byte[] menuImage;
+	private String menuImage;
 
 	private double price;
 
@@ -89,11 +87,11 @@ public class Menu implements Serializable {
 		this.ingredients = ingredients;
 	}
 
-	public byte[] getMenuImage() {
+	public String getMenuImage() {
 		return this.menuImage;
 	}
 
-	public void setMenuImage(byte[] menuImage) {
+	public void setMenuImage(String menuImage) {
 		this.menuImage = menuImage;
 	}
 
@@ -161,7 +159,7 @@ public class Menu implements Serializable {
 		this.sellerProfile = sellerProfile;
 	}
 
-	public Menu(String menuId, Timestamp availabilityTime, String ingredients, byte[] menuImage, double price,
+	public Menu(String menuId, Timestamp availabilityTime, String ingredients, String menuImage, double price,
 			int quantity, String recipe, String sellingType, String status, Category category,
 			SellerProfile sellerProfile, Item item) {
 		super();
