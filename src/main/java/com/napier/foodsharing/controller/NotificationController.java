@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.napier.foodsharing.entity.Notification;
+import com.napier.foodsharing.entity.OrderItem;
 import com.napier.foodsharing.service.NotificationService;
 
 @RestController
@@ -29,7 +30,8 @@ public class NotificationController {
 	}
 
 	@GetMapping("/send")
-	private Boolean sendNotification(@RequestParam("message") String message, @RequestParam("orderId") String orderId) {
-		return notificationService.sendNotifcations(message, orderId);
+	private List<OrderItem> sendNotification(@RequestParam("message") String message,
+			@RequestParam("orderId") String orderId, @RequestParam("sellerId") String sellerId) {
+		return notificationService.sendNotifcations(message, orderId, sellerId);
 	}
 }

@@ -124,4 +124,8 @@ public class OrderUsecase {
 		feedsummary.setOrderRecivedCount(orderRecivedCount);
 		return feedsummary;
 	}
+
+	public List<OrderItem> getOrderDetailForSeller(String sellerId) {
+		return orderRepository.findBySellerId(sellerId);
+	}
 }

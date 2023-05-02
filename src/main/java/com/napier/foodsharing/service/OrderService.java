@@ -50,4 +50,8 @@ public class OrderService {
 		return orderUsecase.getFeedBack(userId);
 	}
 
+	public List<OrderItem> getOrderDetailForSeller(String sellerId) {
+		return orderUsecase.getOrderDetailForSeller(sellerId);
+	}
+
 }

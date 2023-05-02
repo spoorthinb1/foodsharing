@@ -37,7 +37,7 @@ public class NotificationService {
 		return notificationRepository.save(notifiy);
 	}
 
-	public Boolean sendNotifcations(String message, String orderId) {
+	public List<OrderItem> sendNotifcations(String message, String orderId, String sellerId) {
 		OrderItem order = orderRepository.findById(orderId).get();
 		order.setOrderStatus("Complete");
 		orderRepository.save(order);
@@ -48,7 +48,7 @@ public class NotificationService {
 		notification.setUserId(order.getCustomer().getUserId());
 		notification.setNotified(false);
 		notificationRepository.save(notification);
-		return true;
+		return orderRepository.findBySellerId(sellerId);
 
 	}
 

@@ -45,6 +45,11 @@ public class OrderController {
 
 	}
 
+	@GetMapping("/seller")
+	public List<OrderItem> getSellerOrder(@RequestParam("sellerId") String sellerId) {
+		return orderService.getOrderDetailForSeller(sellerId);
+	}
+
 	@GetMapping("/feedback/summary")
 	public FeedBackSumary getFeedBack(@RequestParam("userId") String userId) {
 		return orderService.getFeedBack(userId);
