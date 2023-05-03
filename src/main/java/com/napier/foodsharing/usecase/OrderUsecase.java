@@ -40,7 +40,7 @@ public class OrderUsecase {
 		// Create OrderId
 		OrderItem order = new OrderItem();
 		order.setOrderStatus(Constant.IN_PROGRESS);
-		order.setPaymentStatus(Constant.PENDING);
+		order.setPaymentStatus(Constant.SUCCESSFULL);
 		order.setOrderDateTime(Timestamp.valueOf(LocalDateTime.now()));
 		order.setSellerId(findSellerId(orderItems.get(0).getMenuId()));
 		order.setTotal(orderItems.stream().map(e -> e.getSubTotal()).reduce(0.0, (a, b) -> a + b));

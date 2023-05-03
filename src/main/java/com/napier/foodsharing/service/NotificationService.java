@@ -43,8 +43,8 @@ public class NotificationService {
 		orderRepository.save(order);
 		Notification notification = new Notification();
 		notification.setMessage(message);
-		notification.setLinkMessageOne(orderId);
-		notification.setLinkMessageTwo(order.getSellerId());
+		notification.setLinkMessageOne(order.getSellerId());
+		notification.setLinkMessageTwo(orderId);
 		notification.setUserId(order.getCustomer().getUserId());
 		notification.setNotified(false);
 		notificationRepository.save(notification);
